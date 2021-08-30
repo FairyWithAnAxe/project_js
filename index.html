@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cocktails</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <style>
+        .cocktails-name {
+            position: absolute;
+            top: 63%;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 0;
+
+            color: black;
+            text-align: center;
+
+            background-color: rgba(255, 255, 255, 0.425);
+        }
+
+        .cocktails-name {
+            cursor: pointer;
+        }
+
+        .cocktails-name:hover {
+            color: white;
+            background-color: #d1358160;
+            transition: all 0.5s;
+        }
+
+        .cocktails-name_black:hover {
+            color: black;
+            transition: all 0.5s;
+        }
+
+        .cocktails-img {
+            border-radius: calc(0.5rem - 1px);
+        }
+
+        .cocktail-card {
+            width: 300px;
+            min-height: 300px;
+            max-height: fit-content;
+        }
+
+        @media screen and (max-width: 320px) {
+            .cocktail-card {
+                min-height: 200px;
+            }
+
+            .cocktails-name {
+                padding: 9px;
+            }
+
+            .btn-like {
+                bottom: 1%;
+                right: 1%;
+            }
+        }
+
+        .card-info {
+            position: relative;
+        }
+
+        .button-close {
+            position: absolute;
+            top: 0;
+            right: 6px;
+        }
+
+        .btn-like {
+            position: absolute;
+            padding: 5px 10px;
+            bottom: 2%;
+            right: 2%;
+        }
+
+        .cocktail-list {
+            list-style: none;
+        }
+
+        .cocktail-list li::before {
+            content: "\2022";
+            color: rgb(218, 18, 141);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        .cocktail-list li:hover {
+            color: rgb(218, 18, 141);
+            transition: all 0.5s;
+        }
+
+        .error-message {
+            width: 320px;
+            height: 50px;
+            line-height: 50px;
+            margin: 5% auto;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div class="backgr" style="position:absolute; z-index: 500; ">
+        <button type="button" onclick="close()" class="btn btn-primary"
+            style="font-weight: 900; margin-left: 96%; margin-top: 0.7%;">X</button>
+        <div class="banner">
+            <h1 style="font-size: 6em;;">Content Warning!</h1>
+            <p style="font-size: 2em;">By clicking "Enter" you accept that you're older, than 18 years.</p>
+            <button type="button" onclick="hide()" class="btn btn-primary" style="margin-left: 80%">Enter</button>
+        </div>
+    </div> -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="coctailblog.html">
+                <h2>The Cocktail Blog</h2>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Personal account</a>
+                    </li>
+
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" id="search" placeholder="Lets search?"
+                        aria-label="Search">
+                    <button class="btn btn-secondary" type="button" onClick="searchCoctailsResult()">Search</button>
+                </form>
+                <a class="btn btn-secondary mx-2 " data-bs-toggle="modal" href="#exampleModalToggle" role="button"
+                    onclick="generateCocktails();">Reset</a>
+                <a class="btn btn-secondary mx-2 " data-bs-toggle="modal" href="#exampleModalToggle"
+                    role="button">Registration</a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="errorMessage"></div>
+    <div class="cocktails-container d-flex flex-row flex-wrap justify-content-center" id="cocktailsContainer">
+
+    </div>
+
+    <div id="modalToggle2"></div>
+    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+        tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalToggleLabel">Registration</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-2">
+                            <label for="recipient-name" class="col-form-label">Enter your name:</label>
+                            <input type="text" class="form-control" id="name">
+                            <div id="nameErr" class="error text-warning mt-1">
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label for="recipient-name" class="col-form-label">Enter your email:</label>
+                            <input type="email" class="form-control" id="email">
+                            <div id="emailErr" class="error text-warning mt-1">
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label for="recipient-name" class="col-form-label">Enter your password:</label>
+                            <input type="password" class="form-control" id="password">
+                            <div id="passwordErr" class="error text-warning mt-1">
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label for="recipient-name" class="col-form-label">Repeat your password:</label>
+                            <input type="password" class="form-control" id="retype_password">
+                            <div id="passwordErr2" class="error text-warning mt-1">
+                            </div>
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-text">
+                                <input class="form-check-input mt-0 me-1" type="checkbox" value="" id="policy"
+                                    aria-label="Checkbox for following text input">
+                                <label for="policy" class="col-form-label text-wrap">Consent to the processing of personal data</label>
+                            </div>
+                        </div>
+                        <div id="policyErr" class="error text-warning mt-1 mb-2"></div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-text">
+                                <input class="form-check-input mt-0 me-1" type="checkbox" value="" id="newsletter">
+                                <label for="newsletter" class="col-form-label">I want to receive newsletter</label>
+                                <div id="error" class="error text-warning mt-1">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer" id="modal-footer">
+                    <button id="regBtn" type="button" class="btn btn-primary">Send</button>
+
+                    <!-- <button id="sendBtn2" class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal"
+                        data-bs-dismiss="modal">Send</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+        tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalToggleLabel2">Registration</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Thank you for registering!
+                </div>
+                <div class="modal-footer">
+                    <!-- <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
+                        data-bs-dismiss="modal">Go to your personal account</button> -->
+                        <a class="btn btn-success"  href="personal_account.html">Personal account</a>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">
+</script>
+
+<!-- Разделите и перенесите ваш код от главной страницы в index.js и код от личного кабинета в JS.js -->
+    <script src="index.js"></script>
+    <script src="JS.js"></script>
+
+    
+</body>
+
+</html>

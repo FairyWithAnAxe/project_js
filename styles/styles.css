@@ -1,0 +1,42 @@
+
+.backgr{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(1, 100, 214, 0.644);
+}
+
+.banner{
+    width: 49%;
+    height: 20%;
+    margin: auto;
+    margin-top: 12%;
+}
+
+.mainWithMenu{
+    display: fl;
+}
+
+.mainWithMenu{
+    display: flex;
+}
+
+.menuAndCheer{
+    width: 20%;
+    margin-left: 2.5%;
+    margin-top: 1%;
+}
+
+.ownCocktails{
+    margin-left: 2.5%;
+    margin-top: 3%;
+}
+
+.mainWithMenu{
+    display: flex;
+}
+
+.menuAndCheer{
+    width: 20%;
+    margin-left: 2.5%;
+    margin-top: 1%;
+}

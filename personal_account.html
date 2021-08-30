@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="coctailblog.html">
+                <h2>КоктейльБлог</h2>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Personal account</a>
+                    </li>
+
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" id="search" placeholder="Lets search?"
+                        aria-label="Search">
+                    <button class="btn btn-secondary" type="button" onClick="searchCoctailsResult()">Search</button>
+                </form>
+                <!-- <a class="btn btn-secondary mx-2 " data-bs-toggle="modal" href="#exampleModalToggle"
+                    role="button">Registration</a> -->
+            </div>
+        </div>
+    </nav>
+
+    <div class="mainWithMenu">
+        <div class="menuAndCheer">
+            <form name="personalMenu">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="on" checked="checked"
+                    checked value="favouriteCocktails" onchange="personalChange()">
+                <label class="btn btn-outline-primary" for="btnradio1">Your favourite cocktails</label>
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" checked=""
+                    value="ownCocktails" onchange="personalChange()">
+                <label class="btn btn-outline-primary" for="btnradio2">Make your own cocktails</label>
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" checked=""
+                    value="calculator" onchange="personalChange()">
+                <label class="btn btn-outline-primary" for="btnradio3">Alcohol Calculator</label>
+            </form>
+
+            <h3>Cheer of the day!</h3>
+            <div class="card gif-card" style="width: 300px; min-height: 300px;">
+                <img class="card-img cocktails-img" src="" alt="" id="gifImg"
+                    style="width: 300px; height: 300px; object-fit: cover;">
+                <p class="text-center pt-1 mb-0" id="tost"></p>
+            </div>
+        </div>
+
+        <main class="main">
+            <div class="row row-cols-1 row-cols-md-4 g-4 mt-3" id="searched"></div>
+            <div class="errorMessage" id="errorMessage">
+                <div class="calculator container mt-5 mb-5">
+                    <div class="row justify-content-center">
+                        <div class="col-6">
+                            <h1 class="mb-2 text-center">Blood alcohol calculator</h1>
+                            <form id="form" class="form-check needs-validation" onsubmit="return false;">
+
+                                <div class="row justify-content-center mb-2">
+                                    <div class="col-4">
+                                        <br />
+                                        <label class="form-check-label" for="sex">
+                                            What's your gender</label>
+                                    </div>
+                                    <div class="col-4">
+                                        <br /><label>
+                                        <input class="form-check-input" type="radio" name="sex" value="0.6" checked />Female</label>
+                                    </div>
+                                    <div class="col-4">
+                                        <br /><label>
+                                        <input class="form-check-input" type="radio" name="sex" value="0.7" />Male</label>
+                                    </div>
+                                </div>
+
+                                <div class="mb-2">
+                                    <label class="form-label" for="weight">Body weight (kg)</label>
+                                    <input name="weight" type="number" id="weight" min="40" max="250" required />
+                                </div>
+                                <div class="mb-2">
+                                    <label class="form-check-label" for="height">Height (cm)</label>
+                                    <input name="height" type="number" id="height" min="150" max="250" required />
+                                </div>
+                                <div class="mb-2">
+                                    Alcohol:
+                                    <select id="drinks" name="drinks">
+                                        <option name="strength" value="1">
+                                            Not chosen</option>
+                                        <option name="strength" value="5">
+                                            Beer</option>
+                                        <option name="strength" value="12">
+                                            Wine</option>
+                                        <option name="strength" value="21">
+                                            Liquor</option>
+                                        <option name="strength" value="40">Vodka or whiskey or rum</option>
+                                    </select>
+                                </div>
+                                <div class="mb-2">
+                                    <label class="form-check-label" for="volume">
+                                        Quantity (ml)</label>
+                                    <input name="volume" type="number" id="volume" required />
+                                </div>
+                                <div>
+                                    <button class="btn btn-danger" id="btn" onclick="calc()">Calculate</button>
+                                </div>
+
+                            </form>
+                        </div>
+
+
+
+                        <div class="col-6 mt-5">
+                            <div id="result">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- <tr>
+                                    <th scope="row">Пол</th>
+                                    <td>-</td>
+                                </tr> -->
+                                        <tr>
+                                            <th scope="row">Body weight (kg)</th>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Height (cm)</th>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Alcohol strength(%)</th>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Quantity (ml)</th>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" class="table-danger">Blood alcohol content (ppm)
+                                            </th>
+                                            <td class="table-danger">-</td>
+                                        </tr>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="card ownCocktails" style="display: none;">
+                    <div class="card-body">
+                        <div id="myform">
+                            <label for="name" class="form-check-label">Would you like to create your own coctail? Let's
+                                try</label>
+                            <input class="name form-control" type="text" placeholder="Enter a name" id="name"><br>
+                            <div class="errorMessage" id="errorMessage"></div>
+                            <label for="ingredients" class="form-check-label">choose the ingredients:</label>
+                            <div id="ingredients" class="row row-cols-1 row-cols-md-4 g-1 mt-3"></div><br>
+                            <button type="button" class="btn btn-light" onClick="createNewCoctail()">Сlick it!</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-cols-1 row-cols-md-4 g-4 mt-3" id="myCoctails">
+
+                </div>
+
+                <div class="favouriteCocktails list-group">
+
+
+                </div>
+
+        </main>
+    </div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
+        integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">
+</script>
+    <script src="JS.js"></script>
+
+    <!-- Скрипт для подключения тоста!!! -->
+    <script type="text/javascript" language="javascript" src="http://www.rzhunemogu.ru/widzh/RNMjsonp.js"></script>
+</body>
+
+</html>
